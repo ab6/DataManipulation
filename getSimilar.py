@@ -4,11 +4,11 @@ from functions import *
 
 #if haven't already done, break up test and train files and create term vectors for train docs
 if not os.path.isdir("./testb/"):
-	os.makedirs("/home/amber/Documents/Code/DataManipulation/testb")
-	splitDocsToFiles("/home/amber/Documents/Code/DataManipulation", "eng.testb", "/testb")
+	os.makedirs("/home/ab6/Documents/Code/DataManipulation/testb")
+	splitDocsToFiles("/home/ab6/Documents/Code/DataManipulation", "eng.testb", "/testb")
 if not os.path.isdir("./train/"):
 	os.makedirs("./train")
-	splitDocsToFiles("/home/amber/Documents/Code/DataManipulation", "eng.train", "/train")
+	splitDocsToFiles("/home/ab6/Documents/Code/DataManipulation", "eng.train", "/train")
 	pkl_tvs("./train")
 
 #For all test files:
@@ -21,10 +21,10 @@ if not os.path.isdir("./train/"):
 for testFile in getFileNames("./testb", "parsed"):
 	testVector = make_tv("./testb/" + testFile)
 	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 20)
-	f = open("/home/amber/Documents/Code/DataManipulation/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
+	f = open("/home/ab6/Documents/Code/DataManipulation/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
 	for doc in topDocs:
 		f.write("-DOCSTART- -X- -X- O\n")
-		g = open("/home/amber/Documents/Code/DataManipulation/train/" + doc, 'r')
+		g = open("/home/ab6/Documents/Code/DataManipulation/train/" + doc, 'r')
 		lines = g.readlines()
 		for line in lines:
 			f.write(line)

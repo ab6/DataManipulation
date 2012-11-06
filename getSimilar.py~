@@ -23,7 +23,7 @@ for testFile in getFileNames("./testb", "parsed"):
 	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 20)
 	f = open("/home/amber/Documents/Code/DataManipulation/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
 	for doc in topDocs:
-		f.write("-DOCSTART- -X- -X- O")
+		f.write("-DOCSTART- -X- -X- O\n")
 		g = open("/home/amber/Documents/Code/DataManipulation/train/" + doc, 'r')
 		lines = g.readlines()
 		for line in lines:

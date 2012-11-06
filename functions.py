@@ -8,6 +8,7 @@ import operator
 def annotate(tagger, testFile):
 #	if __name__ == "__main__":
 #		startingDir = os.getcwd
+	print ""
 
 #TrainLBJtagger
 def trainTagger(trainFile):

@@ -4,6 +4,16 @@ import cPickle as pickle
 from math import sqrt
 import operator
 
+#Annotate given file with trained tagger
+def annotate(tagger, testFile):
+#	if __name__ == "__main__":
+#		startingDir = os.getcwd
+
+#TrainLBJtagger
+def trainTagger(trainFile):
+	print ""
+	
+
 #Get top ___ similar documents
 #returns dict with pkl doc and sim to test vector
 def getTopDocs(tv1, fileList, directory, num):
