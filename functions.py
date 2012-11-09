@@ -4,7 +4,18 @@ import cPickle as pickle
 from math import sqrt
 import operator
 
+#Annotate given file with trained tagger
+def annotate(tagger, testFile):
+#	if __name__ == "__main__":
+#		startingDir = os.getcwd
+
+#TrainLBJtagger
+def trainTagger(trainFile):
+	print ""
+	
+
 #Get top ___ similar documents
+#returns dict with pkl doc and sim to test vector
 def getTopDocs(tv1, fileList, directory, num):
 	docSims = dict()
 	for trainPkl in fileList:
@@ -14,7 +25,10 @@ def getTopDocs(tv1, fileList, directory, num):
 		docSims[trainPkl] = cosign(tv1, tv2)
 	sortedDict = sorted(docSims.iteritems(), key=operator.itemgetter(1), reverse=True)
 	topSim = sortedDict[:20]
-	return topSim
+	docs = []
+	for doc, sim in topSim:
+		docs.append(doc[:(len(doc)-10)] + "tagged.txt")
+	return docs
 
 #Calculate cosine similarity btw two term vectors
 def cosign(tv1, tv2):

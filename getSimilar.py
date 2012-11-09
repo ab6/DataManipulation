@@ -11,9 +11,6 @@ if not os.path.isdir("./train/"):
 	splitDocsToFiles("/home/amber/Documents/Code/DataManipulation", "eng.train", "/train")
 	pkl_tvs("./train")
 
-#Get file names of term vector pkl files in training set
-tvFilenames = getFileNames("./train", ".pkl")
-
 #For all test files:
 #	create term vector
 #	get cosign sim with all train term vectors and save in dict with train pkl file name
@@ -24,7 +21,15 @@ tvFilenames = getFileNames("./train", ".pkl")
 for testFile in getFileNames("./testb", "parsed"):
 	testVector = make_tv("./testb/" + testFile)
 	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 20)
-	for doc, sim in topDocs:
-	
+	f = open("/home/amber/Documents/Code/DataManipulation/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
+	for doc in topDocs:
+		f.write("-DOCSTART- -X- -X- O\n")
+		g = open("/home/amber/Documents/Code/DataManipulation/train/" + doc, 'r')
+		lines = g.readlines()
+		for line in lines:
+			f.write(line)
+		g.close()
+	f.close()
+		
 
 
