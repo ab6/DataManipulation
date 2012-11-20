@@ -1,7 +1,7 @@
 
-name = 'eng.testb'
+name = 'eng.testb1tagged'
 oDoc = open (name)
-nDoc = open (name + '_lbjFormat.txt', 'w')
+nDoc = open ('aaa' + name + '.txt', 'w')
 string = ""
 remString = ""
 count = 0

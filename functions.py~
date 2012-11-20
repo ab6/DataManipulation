@@ -8,6 +8,7 @@ import operator
 def annotate(tagger, testFile):
 #	if __name__ == "__main__":
 #		startingDir = os.getcwd
+	print ""
 
 #TrainLBJtagger
 def trainTagger(trainFile):
@@ -88,20 +89,68 @@ def splitDocsToFiles(filepath, filename, folder):
 	count = 0
   	newFileKey = "-DOCSTART-"
 	newTaggedFile = ""
-	newParsedFile = ""
 	string = ""
+	lineCount = 0
 	for eachLine in oDoc:
       		if newFileKey in eachLine:
          		if newTaggedFile: 
 				newTaggedFile.close()
+         		count = count + 1
+			if count < 10:
+				fileTagged = filepath + folder + "/" + filename + "00" + str(count) + "tagged.txt"
+			elif count < 100:   
+				fileTagged = filepath + folder + "/" + filename + "0" + str(count) + "tagged.txt"      		
+			else:
+				fileTagged = filepath + folder + "/" + filename + str(count) + "tagged.txt"
+         		newTaggedFile = open(fileTagged, 'w')
+   		else:
+			if eachLine.strip():
+         			newTaggedFile.write(lbjFormat(eachLine, lineCount))
+				count += 1
+			else:
+				newTaggedFile.write("\n")
+				count = 0
+
+   	newTaggedFile.close()
+   	oDoc.close()
+
+#Format line for Lbj tagger
+def lbjFormat(line, count):
+	string = ""
+	remString = ""
+        cut = line.find(' ')
+        word = line[:cut]
+        remString = line[cut + 1:]
+        cut = remString.find(' ')
+        spot2 = remString[:cut]
+        remString = remString[cut + 1:]
+        cut = remString.find(' ')
+        spot3 = remString[:cut]
+        remString = remString[cut + 1:]
+        cut = remString.find(' ')
+        spot4 = remString[:cut]
+        return (spot4 +'\t' + '0\t' + str(count)+ '\t' + spot3 +'\t' + spot2 + '\t' + word + '\tx\t' + 'x\t' + 'x\n')
+
+	
+def createPlainFiles(filepath, filename, folder):
+	oDoc = open (filepath + "/" + filename)
+	count = 0
+  	newFileKey = "-DOCSTART-"
+	newParsedFile = ""
+	string = ""
+	for eachLine in oDoc:
+      		if newFileKey in eachLine:
+         		if newParsedFile: 
 				newParsedFile.close()
          		count = count + 1
-         		fileTagged = filepath + folder + "/" + filename + str(count) + "tagged" + ".txt"
-         		newTaggedFile = open(fileTagged, 'w')
-			fileParsed = filepath + folder + "/" + filename + str(count) + "parsed" + ".txt"
+			if count < 10:
+				fileParsed = filepath + folder + "/" + filename + "00" + str(count) + "parsed.txt"
+			elif count < 100:   
+				fileParsed = filepath + folder + "/" + filename + "0" + str(count) + "parsed.txt"      		
+			else:
+				fileParsed = filepath + folder + "/" + filename + str(count) + "parsed.txt"
          		newParsedFile = open(fileParsed, 'w')
    		else:
-         		newTaggedFile.write(eachLine)
 			if eachLine.strip():
              			cut = eachLine.find(' ')
               			word = eachLine[:cut]
@@ -112,7 +161,6 @@ def splitDocsToFiles(filepath, filename, folder):
           		else:
               			newParsedFile.write(string + "\n")
 				string = ""
-   	newTaggedFile.close()
 	newParsedFile.close()
    	oDoc.close()
 
