@@ -6,9 +6,11 @@ from functions import *
 if not os.path.isdir("./testb/"):
 	os.makedirs("/home/amber/Documents/Code/DataManipulation/testb")
 	splitDocsToFiles("/home/amber/Documents/Code/DataManipulation", "eng.testb", "/testb")
+	createPlainFiles("/home/amber/Documents/Code/DataManipulation", "eng.testb", "/testb")
 if not os.path.isdir("./train/"):
 	os.makedirs("./train")
 	splitDocsToFiles("/home/amber/Documents/Code/DataManipulation", "eng.train", "/train")
+	createPlainFiles("/home/amber/Documents/Code/DataManipulation", "eng.train", "/train")
 	pkl_tvs("./train")
 
 #For all test files:
@@ -20,7 +22,7 @@ if not os.path.isdir("./train/"):
 #	tag test text and save to file
 for testFile in getFileNames("./testb", "parsed"):
 	testVector = make_tv("./testb/" + testFile)
-	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 20)
+	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 50)
 	f = open("/home/amber/Documents/Code/DataManipulation/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
 	for doc in topDocs:
 		f.write("-DOCSTART- -X- -X- O\n")

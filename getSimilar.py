@@ -22,10 +22,10 @@ if not os.path.isdir("./train/"):
 #	tag test text and save to file
 for testFile in getFileNames("./testb", "parsed"):
 	testVector = make_tv("./testb/" + testFile)
-	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 20)
+	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 50)
 	f = open("/home/amber/Documents/Code/DataManipulation/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
 	for doc in topDocs:
-		f.write("-DOCSTART- -X- -X- O\n")
+		f.write("O\t0\t0\tO\t-X-\t-DOCSTART-\tx\tx\tO\n")
 		g = open("/home/amber/Documents/Code/DataManipulation/train/" + doc, 'r')
 		lines = g.readlines()
 		for line in lines:

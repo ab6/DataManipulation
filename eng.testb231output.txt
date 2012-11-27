@@ -1,0 +1,194 @@
+Adding feature: Forms
+Adding feature: Capitalization
+Adding feature: WordTypeInformation
+Adding feature: Affixes
+Adding feature: PreviousTag1
+Adding feature: PreviousTag2
+Adding feature: PreviousTagPatternLevel1
+Adding feature: PreviousTagPatternLevel2
+Adding feature: GazetteersFeatures
+Adding feature: BrownClusterPaths
+Adding feature: prevTagsForContext
+Adding feature: PredictionsLevel1
+Working parameters are:
+inferenceMethod=GREEDY
+beamSize=5
+thresholdPrediction=false
+predictionConfidenceThreshold=-1.0
+labelTypes
+	PER	ORG	LOC	MISC
+logging=false
+debuggingLogPath=./DebugLog//finalSystemBILOUdebugLog.txt
+forceNewSentenceOnLineBreaks=true
+keepOriginalFileTokenizationAndSentenceSplitting=false
+taggingScheme=BILOU
+tokenizationScheme=DualTokenizationScheme
+pathToModelFile=./data/Models/CoNLL//finalSystemBILOU.model
+Brown clusters resource: 
+	-Path: ./data/BrownHierarchicalWordClusters/brown-english-wikitext.case-intact.txt-c1000-freq10-v3.txt
+	-WordThres=5
+	-IsLowercased=false
+Brown clusters resource: 
+	-Path: ./data/BrownHierarchicalWordClusters/brownBllipClusters
+	-WordThres=5
+	-IsLowercased=false
+Brown clusters resource: 
+	-Path: ./data/BrownHierarchicalWordClusters/rcv1.clean.tokenized-c1000-p1.paths.txt
+	-WordThres=5
+	-IsLowercased=false
+Reading the Brown clusters resource: ./data/BrownHierarchicalWordClusters/brown-english-wikitext.case-intact.txt-c1000-freq10-v3.txt
+1288301 words added
+Reading the Brown clusters resource: ./data/BrownHierarchicalWordClusters/brownBllipClusters
+95262 words added
+Reading the Brown clusters resource: ./data/BrownHierarchicalWordClusters/rcv1.clean.tokenized-c1000-p1.paths.txt
+85963 words added
+loading dazzetteers....
+	loading gazzetteer:...../data/KnownLists/WikiPeopleRedirects.lst
+	loading gazzetteer:...../data/KnownLists/known_name.lst
+	loading gazzetteer:...../data/KnownLists/Occupations.txt
+	loading gazzetteer:...../data/KnownLists/known_jobs.lst
+	loading gazzetteer:...../data/KnownLists/WikiSongsRedirects.lst
+	loading gazzetteer:...../data/KnownLists/WikiArtWorkRedirects.lst
+	loading gazzetteer:...../data/KnownLists/known_names.big.lst
+	loading gazzetteer:...../data/KnownLists/known_title.lst
+	loading gazzetteer:...../data/KnownLists/measurments.txt
+	loading gazzetteer:...../data/KnownLists/WikiOrganizations.lst
+	loading gazzetteer:...../data/KnownLists/known_country.lst
+	loading gazzetteer:...../data/KnownLists/WikiFilms.lst
+	loading gazzetteer:...../data/KnownLists/ordinalNumber.txt
+	loading gazzetteer:...../data/KnownLists/WikiSongs.lst
+	loading gazzetteer:...../data/KnownLists/WikiLocations.lst
+	loading gazzetteer:...../data/KnownLists/WikiManMadeObjectNamesRedirects.lst
+	loading gazzetteer:...../data/KnownLists/VincentNgPeopleTitles.txt
+	loading gazzetteer:...../data/KnownLists/known_state.lst
+	loading gazzetteer:...../data/KnownLists/WikiArtWork.lst
+	loading gazzetteer:...../data/KnownLists/WikiOrganizationsRedirects.lst
+	loading gazzetteer:...../data/KnownLists/WikiCompetitionsBattlesEventsRedirects.lst
+	loading gazzetteer:...../data/KnownLists/WikiLocationsRedirects.lst
+	loading gazzetteer:...../data/KnownLists/currencyFinal.txt
+	loading gazzetteer:...../data/KnownLists/known_nationalities.lst
+	loading gazzetteer:...../data/KnownLists/WikiPeople.lst
+	loading gazzetteer:...../data/KnownLists/cardinalNumber.txt
+	loading gazzetteer:...../data/KnownLists/known_place.lst
+	loading gazzetteer:...../data/KnownLists/known_corporations.lst
+	loading gazzetteer:...../data/KnownLists/KnownNationalities.txt
+	loading gazzetteer:...../data/KnownLists/temporal_words.txt
+	loading gazzetteer:...../data/KnownLists/WikiFilmsRedirects.lst
+	loading gazzetteer:...../data/KnownLists/WikiManMadeObjectNames.lst
+	loading gazzetteer:...../data/KnownLists/WikiCompetitionsBattlesEvents.lst
+found 33 gazetteers
+Reading  the file: /home/amber/Documents/Code/DataManipulation/testb/eng.testb231tagged.txt
+Annotating the data with expressive features...
+Brown clusters OOV statistics:
+Data statistics:
+		- Total tokens with repetitions =270
+		- Total unique tokens  =165
+		- Total unique tokens ignore case =157
+	* OOV statistics for the resource: ./data/BrownHierarchicalWordClusters/brown-english-wikitext.case-intact.txt-c1000-freq10-v3.txt(covers 1288301 unique tokens)
+		- Total OOV tokens, Case Sensitive =8
+		- OOV tokens, no repetitions, Case Sensitive =5
+		- Total OOV tokens even after lowercasing  =7
+		- OOV tokens even after lowercasing, no repetition  =4
+	* OOV statistics for the resource: ./data/BrownHierarchicalWordClusters/brownBllipClusters(covers 95262 unique tokens)
+		- Total OOV tokens, Case Sensitive =13
+		- OOV tokens, no repetitions, Case Sensitive =10
+		- Total OOV tokens even after lowercasing  =11
+		- OOV tokens even after lowercasing, no repetition  =8
+	* OOV statistics for the resource: ./data/BrownHierarchicalWordClusters/rcv1.clean.tokenized-c1000-p1.paths.txt(covers 85963 unique tokens)
+		- Total OOV tokens, Case Sensitive =10
+		- OOV tokens, no repetitions, Case Sensitive =10
+		- Total OOV tokens even after lowercasing  =6
+		- OOV tokens even after lowercasing, no repetition  =6
+Annotating the data with gazetteers
+Annotating the data with context-aggregation features (if necessary)
+Done Annotating the data with expressive features...
+Annontating data with the models tagger, the inference algoritm is: GREEDY
+Extracting features for level 2 inference
+Done - Extracting features for level 2 inference
+Done Annontating data with the models tagger, the inference algoritm is: GREEDY
+Inference time: 376 milliseconds
+------------------------------------------------------------
+******	Performance on dataset /home/amber/Documents/Code/DataManipulation/testb/eng.testb231tagged.txt  **********
+------------------------------------------------------------
+Phrase-level Acc Level2:
+ Label   Precision Recall  F1   LCount PCount
+---------------------------------------------
+LOC          0.000  0.000 0.000      0     11
+MISC         0.000  0.000 0.000      0      5
+ORG          0.000  0.000 0.000      0      1
+PER          0.000  0.000 0.000      0      8
+---------------------------------------------
+O            0.000  0.000 0.000     25      0
+---------------------------------------------
+Overall      0.000  0.000 0.000      0     25
+Accuracy     0.000   -      -     -        25
+Token-level Acc Level2:
+ Label   Precision Recall    F1   LCount PCount
+-----------------------------------------------
+LOC         90.909  83.333 86.957     12     11
+MISC       100.000  63.636 77.778     11      7
+ORG          0.000   0.000  0.000      2      1
+PER        100.000  90.909 95.238     11     10
+-----------------------------------------------
+O           97.095 100.000 98.526    234    241
+-----------------------------------------------
+Overall     93.103  75.000 83.077     36     29
+Accuracy    96.667    -      -      -       270
+Level2 BILOU Accuracy, letter-by-letter:
+ Label   Precision Recall    F1    LCount PCount
+------------------------------------------------
+I-LOC        0.000   0.000   0.000      2      0
+I-MISC     100.000  66.667  80.000      3      2
+I-ORG        0.000   0.000   0.000      1      0
+I-PER      100.000 100.000 100.000      2      2
+L-LOC        0.000   0.000   0.000      1      0
+L-MISC     100.000 100.000 100.000      2      2
+L-ORG        0.000   0.000   0.000      1      0
+L-PER      100.000 100.000 100.000      2      2
+U-LOC       81.818 100.000  90.000      9     11
+U-MISC     100.000  50.000  66.667      6      3
+U-ORG        0.000   0.000   0.000      0      1
+U-PER      100.000  85.714  92.308      7      6
+------------------------------------------------
+O           97.095 100.000  98.526    234    241
+------------------------------------------------
+Overall     89.655  72.222  80.000     36     29
+Accuracy    96.296    -       -      -       270
+Level2 BILOU PHRASE/BOUNDARY DETECTION Accuracy
+ Label   Precision Recall    F1   LCount PCount
+-----------------------------------------------
+I          100.000  50.000 66.667      8      4
+L          100.000  66.667 80.000      6      4
+U           85.714  81.818 83.721     22     21
+-----------------------------------------------
+O           97.095 100.000 98.526    234    241
+-----------------------------------------------
+Overall     89.655  72.222 80.000     36     29
+Accuracy    96.296    -      -      -       270
+Phrase-level Acc Level1:
+ Label   Precision Recall  F1   LCount PCount
+---------------------------------------------
+LOC          0.000  0.000 0.000      0     10
+MISC         0.000  0.000 0.000      0      6
+ORG          0.000  0.000 0.000      0      1
+PER          0.000  0.000 0.000      0      8
+---------------------------------------------
+O            0.000  0.000 0.000     25      0
+---------------------------------------------
+Overall      0.000  0.000 0.000      0     25
+Accuracy     0.000   -      -     -        25
+Token-level Acc Level1:
+ Label   Precision Recall    F1   LCount PCount
+-----------------------------------------------
+LOC        100.000  83.333 90.909     12     10
+MISC        77.778  63.636 70.000     11      9
+ORG          0.000   0.000  0.000      2      1
+PER        100.000  90.909 95.238     11     10
+-----------------------------------------------
+O           97.500 100.000 98.734    234    240
+-----------------------------------------------
+Overall     90.000  75.000 81.818     36     30
+Accuracy    96.667    -      -      -       270
+------------------------------------------------------------
+****** (END)	Performance on dataset /home/amber/Documents/Code/DataManipulation/testb/eng.testb231tagged.txt  **********
+------------------------------------------------------------
