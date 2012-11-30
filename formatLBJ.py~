@@ -1,0 +1,16 @@
+import functions
+from functions import *
+
+filename = "eng.train"
+f = open(filename, 'r')
+g = open("lbj" + filename, 'wb')
+
+lineCount = 0
+
+for line in f:
+	if line.strip():
+         	g.write(lbjFormat(line, lineCount))
+		lineCount += 1
+	else:
+		g.write("\n")
+		lineCount = 0

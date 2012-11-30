@@ -25,7 +25,7 @@ for testFile in getFileNames("./testb", "parsed"):
 	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 50)
 	f = open("/home/amber/Documents/Code/DataManipulation/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
 	for doc in topDocs:
-		f.write("-DOCSTART- -X- -X- O\n")
+		f.write("O\t0\t0\tO\t-X-\t-DOCSTART-\tx\tx\tO\n")
 		g = open("/home/amber/Documents/Code/DataManipulation/train/" + doc, 'r')
 		lines = g.readlines()
 		for line in lines:

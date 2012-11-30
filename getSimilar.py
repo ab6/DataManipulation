@@ -2,15 +2,17 @@ import cPickle as pickle
 import functions
 from functions import *
 
+path = "/home/amber/Documents/Code/DataManipulation"
+
 #if haven't already done, break up test and train files and create term vectors for train docs
 if not os.path.isdir("./testb/"):
-	os.makedirs("/home/amber/Documents/Code/DataManipulation/testb")
-	splitDocsToFiles("/home/amber/Documents/Code/DataManipulation", "eng.testb", "/testb")
-	createPlainFiles("/home/amber/Documents/Code/DataManipulation", "eng.testb", "/testb")
+	os.makedirs(path + "/testb")
+	splitDocsToFiles(path, "eng.testb", "/testb")
+	createPlainFiles(path, "eng.testb", "/testb")
 if not os.path.isdir("./train/"):
 	os.makedirs("./train")
-	splitDocsToFiles("/home/amber/Documents/Code/DataManipulation", "eng.train", "/train")
-	createPlainFiles("/home/amber/Documents/Code/DataManipulation", "eng.train", "/train")
+	splitDocsToFiles(path, "eng.train", "/train")
+	createPlainFiles(path, "eng.train", "/train")
 	pkl_tvs("./train")
 
 #For all test files:
@@ -23,10 +25,10 @@ if not os.path.isdir("./train/"):
 for testFile in getFileNames("./testb", "parsed"):
 	testVector = make_tv("./testb/" + testFile)
 	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 50)
-	f = open("/home/amber/Documents/Code/DataManipulation/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
+	f = open(path + "/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
 	for doc in topDocs:
 		f.write("O\t0\t0\tO\t-X-\t-DOCSTART-\tx\tx\tO\n")
-		g = open("/home/amber/Documents/Code/DataManipulation/train/" + doc, 'r')
+		g = open(path + "/train/" + doc, 'r')
 		lines = g.readlines()
 		for line in lines:
 			f.write(line)
