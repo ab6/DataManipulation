@@ -1,16 +1,20 @@
 import cPickle as pickle
 import functions
 from functions import *
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn import cluster
+
+path = "/home/amber/Code/DataManipulation"
 
 #if haven't already done, break up test and train files and create term vectors for train docs
 if not os.path.isdir("./testb/"):
-	os.makedirs("/home/amber/Documents/Code/DataManipulation/testb")
-	splitDocsToFiles("/home/amber/Documents/Code/DataManipulation", "eng.testb", "/testb")
-	createPlainFiles("/home/amber/Documents/Code/DataManipulation", "eng.testb", "/testb")
+	os.makedirs(path + "/testb")
+	splitDocsToFiles(path, "eng.testb", "/testb")
+	createPlainFiles(path, "eng.testb", "/testb")
 if not os.path.isdir("./train/"):
 	os.makedirs("./train")
-	splitDocsToFiles("/home/amber/Documents/Code/DataManipulation", "eng.train", "/train")
-	createPlainFiles("/home/amber/Documents/Code/DataManipulation", "eng.train", "/train")
+	splitDocsToFiles(path, "eng.train", "/train")
+	createPlainFiles(path, "eng.train", "/train")
 	pkl_tvs("./train")
 
 #For all test files:
@@ -20,18 +24,41 @@ if not os.path.isdir("./train/"):
 #	re-aggregate the respective training files
 #	train model with new training set
 #	tag test text and save to file
-for testFile in getFileNames("./testb", "parsed"):
-	testVector = make_tv("./testb/" + testFile)
-	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 50)
-	f = open("/home/amber/Documents/Code/DataManipulation/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
-	for doc in topDocs:
-		f.write("O\t0\t0\tO\t-X-\t-DOCSTART-\tx\tx\tO\n")
-		g = open("/home/amber/Documents/Code/DataManipulation/train/" + doc, 'r')
-		lines = g.readlines()
-		for line in lines:
-			f.write(line)
-		g.close()
-	f.close()
+testfiles = getFileNames("./testb", "parsed")
+trainfiles = getFileNames("./train", "parsed")
+
+testdocuments = [open("./testb/" + f).read() for f in testfiles]
+vectorizer = TfidfVectorizer()
+testvectors = vectorizer.fit_transform(testdocuments)
+traindocuments = [open("./train/" + f).read() for f in trainfiles]
+vectorizer = TfidfVectorizer()
+trainvectors = vectorizer.fit_transform(testdocuments)
+k_means = cluster.KMeans(n_clusters=3)
+k_means.fit(testvectors)
+
+clusters = []
+for i in range(len(testfiles)-1):
+	clusters.append((testfiles[i], k_means.labels_[i]))
+print k_means.labels_
+
+k_means.fit(trainvectors[0])
+
+print k_means.labels_
+
+
+
+#for testFile in files:
+#	testVector = make_tv("./testb/" + testFile)
+#	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 50)
+#	f = open(path + "/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
+#	for doc in topDocs:
+#		f.write("O\t0\t0\tO\t-X-\t-DOCSTART-\tx\tx\tO\n")
+#		g = open(path + "/train/" + doc, 'r')
+#		lines = g.readlines()
+#		for line in lines:
+#			f.write(line)
+#		g.close()
+#	f.close()
 		
 
 

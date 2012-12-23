@@ -2,7 +2,7 @@ import cPickle as pickle
 import functions
 from functions import *
 
-path = "/home/amber/Documents/Code/DataManipulation"
+path = "/home/amber/Code/DataManipulation"
 
 #if haven't already done, break up test and train files and create term vectors for train docs
 if not os.path.isdir("./testb/"):
@@ -22,7 +22,9 @@ if not os.path.isdir("./train/"):
 #	re-aggregate the respective training files
 #	train model with new training set
 #	tag test text and save to file
-for testFile in getFileNames("./testb", "parsed"):
+files = getFileNames("./testb", "parsed")
+
+for testFile in files:
 	testVector = make_tv("./testb/" + testFile)
 	topDocs = getTopDocs(testVector, getFileNames("./train", "pkl"), "./train", 50)
 	f = open(path + "/testb/" + testFile[:len(testFile)-10] + "train.txt", "wb")
