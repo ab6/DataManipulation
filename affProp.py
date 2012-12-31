@@ -109,54 +109,38 @@ splitDocsToFiles(path, "eng.train")
 createPlainFiles(path, "eng.train")
 
 #read in text
-parsed = getFileNames("./files", "parsed")
-trainFiles = []
-testFiles = []
-for name in parsed:
-	if re.search("train", name):
-		trainFiles.append(name)
-	else:
-		testFiles.append(name) 
-trainDocuments = [open("./files/" + f).read() for f in trainFiles]
-testDocuments = [open("./files/" + f).read() for f in testFiles]
+files = getFileNames("./files", "parsed")
+documents = [open("./files/" + f).read() for f in files]
 
-#create vectors and cluster train docs
-numClusters = 4
+#create vectors and cluster docs
 vectorizer = TfidfVectorizer()
-vectors = vectorizer.fit_transform(trainDocuments + testDocuments)
-affProp = cluster.KMeans(n_clusters=numClusters)
-k_means.fit(vectors[:len(trainFiles)])
+vectors = vectorizer.fit_transform(documents)
+clusterer = cluster.AffinityPropagation()
+clusterer.fit(vectors)
 
 #match up cluster assignment with file name
-trainClusters = [(trainFiles[i], k_means.labels_[i]) for i in range(len(trainFiles))]
+clusters = [(files[i], clusterer.labels_[i]) for i in range(len(files))]
 
-#fit test docs to training clusters
-testIndex = k_means.predict(vectors[len(trainFiles):])
-testClusters = [(testFiles[i], testIndex[i]) for i in range(len(testFiles))]
+#find num of clusters
+n_clusters = len(set(clusterer.labels_))
+print n_clusters
 
-#create train files for each cluster
-for i in range(numClusters):
-	train = open("clustertrain" + str(i), 'wb')
-	for (fileName, cluster) in trainClusters:
-		if cluster == i:
-			g = open("./files/" + fileName[:12] + "tagged.txt", 'r')
-			lines = g.readlines()		
-			train.write("O\t0\t0\tO\t-X-\t-DOCSTART-\tx\tx\tO\n")
-			for line in lines:
-				train.write(line)
-			g.close()			
-	train.close()
-
-#create test files for each cluster
-for i in range(numClusters):
+#create training and test files for each cluster
+for i in range(count):
 	test = open("clustertest" + str(i), 'wb')
-	for (fileName, cluster) in testClusters:
+	train = open("clustertrain" + str(i), 'wb')
+	for (fileName, cluster) in clusters:
 		if cluster == i:
 			g = open("./files/" + fileName[:12] + "tagged.txt", 'r')
 			lines = g.readlines()		
-			test.write("O\t0\t0\tO\t-X-\t-DOCSTART-\tx\tx\tO\n")
-			for line in lines:
-				test.write(line)
+			if re.search("test", fileName):
+				test.write("O\t0\t0\tO\t-X-\t-DOCSTART-\tx\tx\tO\n")
+				for line in lines:
+					test.write(line)
+			else:
+				train.write("O\t0\t0\tO\t-X-\t-DOCSTART-\tx\tx\tO\n")
+				for line in lines:
+					train.write(line)
 			g.close()			
 	test.close()
-
+	train.close()
